@@ -15,8 +15,6 @@ def get_matches_for_last_7_days(season_id: int):
     all_matches = []
     for day in get_last_7_days():
         matches_for_day = get_matches_for_day(url=f"https://statbetting.com/fixtures?season={season_id}&date={day}")
-        print(day)
-        print(len(matches_for_day))
         all_matches.extend(matches_for_day)
 
     completed_matches = []
