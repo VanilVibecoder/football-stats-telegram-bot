@@ -1,74 +1,73 @@
-# ⚽ Football Stats Telegram Bot
+# Football Stats Telegram Bot
 
-A Telegram bot that provides recent football match results and detailed match statistics directly in Telegram.
+> Статус: работающий учебный прототип, из которого поэтапно строится коммерческий Telegram-first SaaS.
+> Последняя проверка: 4 сентября 2026 года. Владелец продукта: Иван.
 
-The bot collects data for completed matches from the last 7 days, processes it with Python, and sends the results in a clean and readable format.
+Бот получает результаты завершённых футбольных матчей за последние семь дней со StatBetting и отправляет их в Telegram. Целевой продукт должен за две минуты собирать проверяемый контекст матча для самостоятельного анализа пользователя — без «железных прогнозов», обещаний выигрыша и подмены исторической частоты вероятностью.
 
-## ✅ Current Features
+## Что работает сейчас
 
-- Match results from the last 7 days
-- Ball possession
-- Total shots
-- Shots on target
-- Total passes
-- Goal scorers and goal minutes
-- Assists
-- Automatic filtering of unfinished matches
-- Handling of matches with missing statistics
-- Support for multiple football leagues
-- Telegram commands for quick league selection
+- Telegram-команды для семи лиг;
+- результаты завершённых матчей за последние семь дней;
+- счёт, владение, удары, удары в створ и передачи;
+- авторы голов, минуты и доступные ассисты;
+- пропуск матчей без статуса Full Time;
+- базовая обработка сетевых ошибок и отсутствующих блоков.
 
-## 🌍 Supported Leagues
+Поддерживаемые команды: `/england`, `/england_2`, `/spain`, `/italy`, `/germany`, `/france`, `/mls`.
 
-- `/england` — Premier League
-- `/england_2` — Championship
-- `/spain` — LaLiga
-- `/italy` — Serie A
-- `/germany` — Bundesliga
-- `/france` — Ligue 1
-- `/mls` — MLS
+## Чего пока нет
 
-## 🚧 Roadmap
+PostgreSQL, Redis, RAG/AI, xG, подписки, Telegram Stars, inline-навигация, уведомления, фоновые задачи, тесты и промышленный источник данных пока не реализованы. Запросы к StatBetting выполняются синхронным `requests` внутри асинхронного Telegram-handler; идентификаторы сезонов заданы в коде. Эти ограничения зафиксированы в [аудите текущего состояния](docs/CURRENT_STATE.md).
 
-Planned improvements for future versions:
+## Запуск прототипа
 
-- xG (Expected Goals) statistics
-- Advanced match statistics from additional football data sources
-- More detailed shot data
-- Additional leagues and competitions
-- Faster and fully asynchronous data fetching
-- Automated tests
-- Improved error handling and reliability
-- Better Telegram user experience
-- Match selection and navigation improvements
-- Deployment for 24/7 public access
-
-
-## 🛠 Tech Stack
-
-- Python 3
-- aiogram 3
-- requests
-- BeautifulSoup4
-- lxml
-- python-dotenv
-- Telegram Bot API
-
-Match data is currently collected from StatBetting.
-
-## 🚀 Installation
-
-### 1. Clone the repository
+Требуется Python 3 и Telegram Bot Token.
 
 ```bash
 git clone https://github.com/VanilVibecoder/football-stats-telegram-bot.git
 cd football-stats-telegram-bot
+python -m venv .venv
+```
 
+Windows PowerShell:
 
-## 📌 Project Status
+```powershell
+.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
 
-**MVP — working version**
+Создайте `.env`:
 
-The core functionality is complete and the bot can already fetch, process, format, and display real match statistics.
+```dotenv
+API_TOKEN=your_telegram_bot_token
+```
 
-The next stage is deployment, testing with real users, collecting feedback, and gradually adding advanced football analytics.
+Запустите:
+
+```bash
+python main.py
+```
+
+## Карта документации
+
+- [Словарь предметной области](CONTEXT.md)
+- [Текущее состояние](docs/CURRENT_STATE.md)
+- [Продукт и тарифы](docs/PRODUCT.md)
+- [Функциональная спецификация](docs/FUNCTIONAL_SPEC.md)
+- [Архитектура](docs/ARCHITECTURE.md)
+- [Данные и AI](docs/DATA_AND_AI.md)
+- [Roadmap на 24 недели](docs/ROADMAP.md)
+- [Стратегия тестирования](docs/TESTING.md)
+- [Архитектурные решения](docs/adr/)
+- [Архив исходного ТЗ прототипа](docs/archive/PROTOTYPE_V0_TASKS.md)
+
+Коммерческая стратегия, конкуренты, маркетинг и unit-экономика намеренно хранятся отдельно в приватном репозитории продукта.
+
+## Ответственное использование данных
+
+StatBetting и будущие эксперименты с Understat используются только для прототипирования, пока не подтверждены права на коммерческое отображение данных. Платный запуск блокируется до письменного разрешения выбранного поставщика и проверки полного цикла оплаты и вывода Stars.
+
+## Права на код
+
+Репозиторий опубликован для демонстрации и обучения автора. Лицензия открытого исходного кода не предоставлена: все права сохранены, копирование, распространение и коммерческое переиспользование без разрешения автора не допускаются.
